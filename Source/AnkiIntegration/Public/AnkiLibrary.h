@@ -21,6 +21,9 @@ public:
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "ToJsonArray (String)", CompactNodeTitle = "ToJsonArray", BlueprintAutocast), Category = "AnkiLibrary")
 	static void Conv_StringArrayToJsonArray(const TArray<FString>& InArray, UPARAM(ref) TArray<FBlueprintJsonValue>& OutArray);
 
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "ToJsonArray (String)", CompactNodeTitle = "ToJsonArray", BlueprintAutocast), Category = "AnkiLibrary")
+	static void Conv_JsonObjectArrayToJsonArray(const TArray<FBlueprintJsonObject>& InArray, UPARAM(ref) TArray<FBlueprintJsonValue>& OutArray);
+
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "ToJsonValue (int64)", CompactNodeTitle = "ToJsonValue", BlueprintAutocast), Category = "AnkiLibrary")
 	static FBlueprintJsonValue JsonMakeInt64(int64 IntValue);
 

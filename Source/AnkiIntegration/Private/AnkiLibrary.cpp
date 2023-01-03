@@ -60,6 +60,15 @@ void UAnkiLibrary::Conv_StringArrayToJsonArray(const TArray<FString>& InArray, T
 	}
 }
 
+void UAnkiLibrary::Conv_JsonObjectArrayToJsonArray(const TArray<FBlueprintJsonObject>& InArray, TArray<FBlueprintJsonValue>& OutArray)
+{
+	OutArray.Empty(InArray.Num());
+	for (const auto& Element : InArray)
+	{
+		OutArray.Add(UBlueprintJsonLibrary::JsonMakeObject(Element));
+	}
+}
+
 FBlueprintJsonValue UAnkiLibrary::JsonMakeInt64(int64 IntValue)
 {
 	FBlueprintJsonValue Value;
