@@ -111,6 +111,49 @@ public:
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
 	static UAnkiRequestNode* GetDeckStats(UObject* InWorldContextObject, const TArray<FString>& InDecks);
 
+	// GUI actions
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* GuiBrowse(UObject* InWorldContextObject, const FString& InQuery);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* GuiSelectedNotes(UObject* InWorldContextObject);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* GuiAddCards(UObject* InWorldContextObject, const FBlueprintJsonObject& InNote);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* GuiEditNote(UObject* InWorldContextObject, const int64 InNote);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* GuiCurrentCard(UObject* InWorldContextObject);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* GuiStartCardTimer(UObject* InWorldContextObject);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* GuiShowQuestion(UObject* InWorldContextObject);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* GuiShowAnswer(UObject* InWorldContextObject);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* GuiAnswerCard(UObject* InWorldContextObject, const int32 InEase);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* GuiDeckOverview(UObject* InWorldContextObject, const FString& InName);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* GuiDeckBrowser(UObject* InWorldContextObject);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* GuiDeckReview(UObject* InWorldContextObject, const FString& InName);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* GuiExitAnki(UObject* InWorldContextObject);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* GuiCheckDatabase(UObject* InWorldContextObject);
+
 	// Media actions
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
 	static UAnkiRequestNode* StoreMediaFile(UObject* InWorldContextObject, const FString& InFilename, const FString& InData);

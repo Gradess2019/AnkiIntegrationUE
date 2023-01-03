@@ -333,6 +333,122 @@ UAnkiRequestNode* UAnkiRequestNode::GetDeckStats(UObject* WorldContextObject, co
 	return AnkiRequest(WorldContextObject, Body);
 }
 
+UAnkiRequestNode* UAnkiRequestNode::GuiBrowse(UObject* InWorldContextObject, const FString& InQuery)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("guiBrowse"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("query"), UBlueprintJsonLibrary::JsonMakeString(InQuery));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::GuiSelectedNotes(UObject* InWorldContextObject)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("guiSelectedNotes"));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::GuiAddCards(UObject* InWorldContextObject, const FBlueprintJsonObject& InNote)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("guiAddCards"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("note"), UBlueprintJsonLibrary::JsonMakeObject(InNote));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::GuiEditNote(UObject* InWorldContextObject, const int64 InNote)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("guiEditNote"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("note"), UAnkiLibrary::JsonMakeInt64(InNote));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::GuiCurrentCard(UObject* InWorldContextObject)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("guiCurrentCard"));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::GuiStartCardTimer(UObject* InWorldContextObject)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("guiStartCardTimer"));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::GuiShowQuestion(UObject* InWorldContextObject)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("guiShowQuestion"));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::GuiShowAnswer(UObject* InWorldContextObject)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("guiShowAnswer"));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::GuiAnswerCard(UObject* InWorldContextObject, const int32 InEase)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("guiAnswerCard"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("ease"), UBlueprintJsonLibrary::JsonMakeInt(InEase));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::GuiDeckOverview(UObject* InWorldContextObject, const FString& InName)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("guiDeckOverview"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("name"), UBlueprintJsonLibrary::JsonMakeString(InName));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::GuiDeckBrowser(UObject* InWorldContextObject)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("guiDeckBrowser"));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::GuiDeckReview(UObject* InWorldContextObject, const FString& InName)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("guiDeckReview"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("name"), UBlueprintJsonLibrary::JsonMakeString(InName));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::GuiExitAnki(UObject* InWorldContextObject)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("guiExitAnki"));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::GuiCheckDatabase(UObject* InWorldContextObject)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("guiCheckDatabase"));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
 UAnkiRequestNode* UAnkiRequestNode::StoreMediaFile(UObject* InWorldContextObject, const FString& InFilename, const FString& InData)
 {
 	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("storeMediaFile"));
