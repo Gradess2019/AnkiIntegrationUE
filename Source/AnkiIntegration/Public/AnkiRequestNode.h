@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "BlueprintJsonLibrary.h"
+
 #include "Kismet/BlueprintAsyncActionBase.h"
 #include "AnkiRequestNode.generated.h"
 
@@ -158,6 +160,64 @@ public:
 	
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
 	static UAnkiRequestNode* ReloadCollection(UObject* InWorldContextObject);
+
+	// Model actions
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* ModelNames(UObject* InWorldContextObject);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* ModelNamesAndIds(UObject* InWorldContextObject);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* ModelFieldNames(UObject* InWorldContextObject, const FString& InModelName);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* ModelFieldDescriptions(UObject* InWorldContextObject, const FString& InModelName);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* ModelFieldFonts(UObject* InWorldContextObject, const FString& InModelName);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* ModelFieldsOnTemplates(UObject* InWorldContextObject, const FString& InModelName);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* CreateModel(UObject* InWorldContextObject, const FString& InModelName, const TArray<FString>& InInOrderFields, const TArray<FBlueprintJsonObject>& InCardTemplates, const FString& InCss = "", const bool InIsCloze = false);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* ModelTemplates(UObject* InWorldContextObject, const FString& InModelName);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* ModelStyling(UObject* InWorldContextObject, const FString& InModelName);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* UpdateModelTemplates(UObject* InWorldContextObject, const FBlueprintJsonObject& InModel);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* UpdateModelStyling(UObject* InWorldContextObject, const FBlueprintJsonObject& InModel);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* FindAndReplaceInModels(UObject* InWorldContextObject, const FBlueprintJsonObject& InModel);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* ModelFieldRename(UObject* InWorldContextObject, const FString& InModelName, const FString& InOldFieldName, const FString& InNewFieldName);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* ModelFieldReposition(UObject* InWorldContextObject, const FString& InModelName, const FString& InFieldName, const int32 InIndex);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* ModelFieldAdd(UObject* InWorldContextObject, const FString& InModelName, const FString& InFieldName, const int32 InIndex);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* ModelFieldRemove(UObject* InWorldContextObject, const FString& InModelName, const FString& InFieldName);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* ModelFieldSetFont(UObject* InWorldContextObject, const FString& InModelName, const FString& InFieldName, const FString& InFont);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* ModelFieldSetFontSize(UObject* InWorldContextObject,  const FString& InModelName, const FString& InFieldName, const int32 InFontSize);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* ModelFieldSetDescription(UObject* InWorldContextObject, const FString& InModelName, const FString& InFieldName, const FString& InDescription);
 	
 
 protected:

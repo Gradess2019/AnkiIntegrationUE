@@ -489,3 +489,213 @@ UAnkiRequestNode* UAnkiRequestNode::ReloadCollection(UObject* InWorldContextObje
 
 	return AnkiRequest(InWorldContextObject, Body);
 }
+
+UAnkiRequestNode* UAnkiRequestNode::ModelNames(UObject* InWorldContextObject)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("modelNames"));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::ModelNamesAndIds(UObject* InWorldContextObject)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("modelNamesAndIds"));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::ModelFieldNames(UObject* InWorldContextObject, const FString& InModelName)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("modelFieldNames"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("modelName"), UBlueprintJsonLibrary::JsonMakeString(InModelName));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::ModelFieldDescriptions(UObject* InWorldContextObject, const FString& InModelName)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("modelFieldDescriptions"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("modelName"), UBlueprintJsonLibrary::JsonMakeString(InModelName));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::ModelFieldFonts(UObject* InWorldContextObject, const FString& InModelName)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("modelFieldFonts"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("modelName"), UBlueprintJsonLibrary::JsonMakeString(InModelName));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::ModelFieldsOnTemplates(UObject* InWorldContextObject, const FString& InModelName)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("modelFieldsOnTemplates"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("modelName"), UBlueprintJsonLibrary::JsonMakeString(InModelName));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::CreateModel(UObject* InWorldContextObject, const FString& InModelName, const TArray<FString>& InInOrderFields, const TArray<FBlueprintJsonObject>& InCardTemplates, const FString& InCss, const bool InIsCloze)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("createModel"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	TArray<FBlueprintJsonValue> OrderFieldValues;
+	TArray<FBlueprintJsonValue> CardTemplateValues;
+	UAnkiLibrary::Conv_StringArrayToJsonArray(InInOrderFields, OrderFieldValues);
+	UAnkiLibrary::Conv_JsonObjectArrayToJsonArray(InCardTemplates, CardTemplateValues);
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("modelName"), UBlueprintJsonLibrary::JsonMakeString(InModelName));
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("inOrderFields"), UBlueprintJsonLibrary::JsonMakeArray(OrderFieldValues));
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("cardTemplates"), UBlueprintJsonLibrary::JsonMakeArray(CardTemplateValues));
+
+	if (!InCss.IsEmpty())
+	{
+		UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("css"), UBlueprintJsonLibrary::JsonMakeString(InCss));
+	}
+
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("isCloze"), UBlueprintJsonLibrary::JsonMakeBool(InIsCloze));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::ModelTemplates(UObject* InWorldContextObject, const FString& InModelName)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("modelTemplates"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("modelName"), UBlueprintJsonLibrary::JsonMakeString(InModelName));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::ModelStyling(UObject* InWorldContextObject, const FString& InModelName)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("modelStyling"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("modelName"), UBlueprintJsonLibrary::JsonMakeString(InModelName));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::UpdateModelTemplates(UObject* InWorldContextObject, const FBlueprintJsonObject& InModel)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("updateModelTemplates"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("model"), UBlueprintJsonLibrary::JsonMakeObject(InModel));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::UpdateModelStyling(UObject* InWorldContextObject, const FBlueprintJsonObject& InModel)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("updateModelStyling"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("model"), UBlueprintJsonLibrary::JsonMakeObject(InModel));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::FindAndReplaceInModels(UObject* InWorldContextObject, const FBlueprintJsonObject& InModel)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("findAndReplaceInModels"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("model"), UBlueprintJsonLibrary::JsonMakeObject(InModel));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::ModelFieldRename(UObject* InWorldContextObject, const FString& InModelName, const FString& InOldFieldName, const FString& InNewFieldName)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("modelFieldRename"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("modelName"), UBlueprintJsonLibrary::JsonMakeString(InModelName));
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("oldFieldName"), UBlueprintJsonLibrary::JsonMakeString(InOldFieldName));
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("newFieldName"), UBlueprintJsonLibrary::JsonMakeString(InNewFieldName));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::ModelFieldReposition(UObject* InWorldContextObject, const FString& InModelName, const FString& InFieldName, const int32 InIndex)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("modelFieldReposition"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("modelName"), UBlueprintJsonLibrary::JsonMakeString(InModelName));
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("fieldName"), UBlueprintJsonLibrary::JsonMakeString(InFieldName));
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("index"), UBlueprintJsonLibrary::JsonMakeInt(InIndex));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::ModelFieldAdd(UObject* InWorldContextObject, const FString& InModelName, const FString& InFieldName, const int32 InIndex)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("modelFieldAdd"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("modelName"), UBlueprintJsonLibrary::JsonMakeString(InModelName));
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("fieldName"), UBlueprintJsonLibrary::JsonMakeString(InFieldName));
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("index"), UBlueprintJsonLibrary::JsonMakeInt(InIndex));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::ModelFieldRemove(UObject* InWorldContextObject, const FString& InModelName, const FString& InFieldName)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("modelFieldRemove"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("modelName"), UBlueprintJsonLibrary::JsonMakeString(InModelName));
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("fieldName"), UBlueprintJsonLibrary::JsonMakeString(InFieldName));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::ModelFieldSetFont(UObject* InWorldContextObject, const FString& InModelName, const FString& InFieldName, const FString& InFont)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("modelFieldSetFont"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("modelName"), UBlueprintJsonLibrary::JsonMakeString(InModelName));
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("fieldName"), UBlueprintJsonLibrary::JsonMakeString(InFieldName));
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("font"), UBlueprintJsonLibrary::JsonMakeString(InFont));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::ModelFieldSetFontSize(UObject* InWorldContextObject, const FString& InModelName, const FString& InFieldName, const int32 InFontSize)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("modelFieldSetFontSize"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("modelName"), UBlueprintJsonLibrary::JsonMakeString(InModelName));
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("fieldName"), UBlueprintJsonLibrary::JsonMakeString(InFieldName));
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("fontSize"), UBlueprintJsonLibrary::JsonMakeInt(InFontSize));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::ModelFieldSetDescription(UObject* InWorldContextObject, const FString& InModelName, const FString& InFieldName, const FString& InDescription)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("modelFieldSetDescription"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("modelName"), UBlueprintJsonLibrary::JsonMakeString(InModelName));
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("fieldName"), UBlueprintJsonLibrary::JsonMakeString(InFieldName));
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("description"), UBlueprintJsonLibrary::JsonMakeString(InDescription));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
