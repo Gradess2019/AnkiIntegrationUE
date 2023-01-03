@@ -42,7 +42,37 @@ bool UAnkiLibrary::SendRequest(const FBlueprintJsonObject& InBody, const TFuncti
 	return Request->ProcessRequest();
 }
 
-// void UAnkiLibrary::GetEaseFactors()
-// {
-// 	
-// }
+void UAnkiLibrary::Conv_Int64ArrayToJsonArray(const TArray<int64>& InArray, TArray<FBlueprintJsonValue>& OutArray)
+{
+	OutArray.Empty(InArray.Num());
+	for (const auto& Element : InArray)
+	{
+		OutArray.Add(JsonMakeInt64(Element));
+	}
+}
+
+void UAnkiLibrary::Conv_StringArrayToJsonArray(const TArray<FString>& InArray, TArray<FBlueprintJsonValue>& OutArray)
+{
+	OutArray.Empty(InArray.Num());
+	for (const auto& Element : InArray)
+	{
+		OutArray.Add(UBlueprintJsonLibrary::JsonMakeString(Element));
+	}
+}
+
+FBlueprintJsonValue UAnkiLibrary::JsonMakeInt64(int64 IntValue)
+{
+	FBlueprintJsonValue Value;
+	Value.Value = MakeShareable(new FJsonValueNumber(IntValue));
+	return Value;
+}
+
+FBlueprintJsonObject UAnkiLibrary::MakeDefaultBodyObject(const FString& InAction)
+{
+	const FBlueprintJsonObject Body = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("action"), UBlueprintJsonLibrary::JsonMakeString(InAction));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("version"), UBlueprintJsonLibrary::JsonMakeInt(6));
+
+	return Body;
+}
+
