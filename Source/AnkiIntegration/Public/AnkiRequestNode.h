@@ -261,6 +261,29 @@ public:
 	
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
 	static UAnkiRequestNode* RemoveEmptyNotes(UObject* InWorldContextObject);
+
+	// Statistic actions
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* GetNumCardsReviewedToday(UObject* InWorldContextObject);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* GetNumCardsReviewedByDay(UObject* InWorldContextObject);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* GetCollectionStatsHTML(UObject* InWorldContextObject, const bool InWholeCollection);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* CardReviews(UObject* InWorldContextObject, const FString& InDeck, const int64 InStartID);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* GetReviewsOfCards(UObject* InWorldContextObject, const TArray<FString>& InCards);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* GetLatestReviewID(UObject* InWorldContextObject, const FString& InDeck);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* InsertReviews(UObject* InWorldContextObject, const TArray<FBlueprintJsonObject>& InReviews);
+	
 	
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "AnkiRequest")

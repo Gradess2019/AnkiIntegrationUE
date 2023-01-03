@@ -849,3 +849,73 @@ UAnkiRequestNode* UAnkiRequestNode::RemoveEmptyNotes(UObject* InWorldContextObje
 
 	return AnkiRequest(InWorldContextObject, Body);
 }
+
+UAnkiRequestNode* UAnkiRequestNode::GetNumCardsReviewedToday(UObject* InWorldContextObject)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("getNumCardsReviewedToday"));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::GetNumCardsReviewedByDay(UObject* InWorldContextObject)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("getNumCardsReviewedByDay"));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::GetCollectionStatsHTML(UObject* InWorldContextObject, const bool InWholeCollection)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("getCollectionStatsHTML"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("wholeCollection"), UBlueprintJsonLibrary::JsonMakeBool(InWholeCollection));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::CardReviews(UObject* InWorldContextObject, const FString& InDeck, const int64 InStartID)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("cardReviews"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("deck"), UBlueprintJsonLibrary::JsonMakeString(InDeck));
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("startID"), UAnkiLibrary::JsonMakeInt64(InStartID));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::GetReviewsOfCards(UObject* InWorldContextObject, const TArray<FString>& InCards)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("getReviewsOfCards"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	TArray<FBlueprintJsonValue> CardsValues;
+	UAnkiLibrary::Conv_StringArrayToJsonArray(InCards, CardsValues);
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("cards"), UBlueprintJsonLibrary::JsonMakeArray(CardsValues));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::GetLatestReviewID(UObject* InWorldContextObject, const FString& InDeck)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("getLatestReviewID"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("deck"), UBlueprintJsonLibrary::JsonMakeString(InDeck));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::InsertReviews(UObject* InWorldContextObject, const TArray<FBlueprintJsonObject>& InReviews)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("insertReviews"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	TArray<FBlueprintJsonValue> ReviewsValues;
+	UAnkiLibrary::Conv_JsonObjectArrayToJsonArray(InReviews, ReviewsValues);
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("reviews"), UBlueprintJsonLibrary::JsonMakeArray(ReviewsValues));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
