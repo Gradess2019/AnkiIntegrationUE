@@ -8,6 +8,9 @@
 
 bool UAnkiLibrary::SendRequest(const FBlueprintJsonObject& InBody, const TFunction<void(const FBlueprintJsonObject& InResponse)>& InCallback)
 {
+	checkf(UBlueprintJsonLibrary::JsonHasField(InBody, TEXT("action")), TEXT("AnkiLibrary::SendRequest: Request body must have 'action' field"));
+	checkf(UBlueprintJsonLibrary::JsonHasField(InBody, TEXT("version")), TEXT("AnkiLibrary::SendRequest: Request body must have 'version' field"));
+	
 	const auto HttpModule = &FHttpModule::Get();
 	const auto Request = HttpModule->CreateRequest();
 	Request->SetURL(TEXT("http://localhost:8765"));
