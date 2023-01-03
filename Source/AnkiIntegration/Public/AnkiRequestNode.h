@@ -219,7 +219,49 @@ public:
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
 	static UAnkiRequestNode* ModelFieldSetDescription(UObject* InWorldContextObject, const FString& InModelName, const FString& InFieldName, const FString& InDescription);
 	
-
+	// Note actions
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* AddNote(UObject* InWorldContextObject, const FBlueprintJsonObject& InNote);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* AddNotes(UObject* InWorldContextObject, const TArray<FBlueprintJsonObject>& InNotes);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* CanAddNotes(UObject* InWorldContextObject, const TArray<FBlueprintJsonObject>& InNotes);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* UpdateNoteFields(UObject* InWorldContextObject, const FBlueprintJsonObject& InNote);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* AddTags(UObject* InWorldContextObject, const TArray<int64>& InNotes, const FString& InTags);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* RemoveTags(UObject* InWorldContextObject, const TArray<int64>& InNotes, const FString& InTags);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* GetTags(UObject* InWorldContextObject);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* ClearUnusedTags(UObject* InWorldContextObject);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* ReplaceTags(UObject* InWorldContextObject, const TArray<int64>& InNotes, const FString& InTagToReplace, const FString& InReplaceWithTag);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* ReplaceTagsInAllNotes(UObject* InWorldContextObject, const FString& InTagToReplace, const FString& InReplaceWithTag);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* FindNotes(UObject* InWorldContextObject, const FString& InQuery);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* NotesInfo(UObject* InWorldContextObject, const TArray<int64>& InNotes);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* DeleteNotes(UObject* InWorldContextObject, const TArray<int64>& InNotes);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* RemoveEmptyNotes(UObject* InWorldContextObject);
+	
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "AnkiRequest")
 	FBlueprintJsonObject Body;

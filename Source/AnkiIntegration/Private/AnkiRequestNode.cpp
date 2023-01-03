@@ -699,3 +699,153 @@ UAnkiRequestNode* UAnkiRequestNode::ModelFieldSetDescription(UObject* InWorldCon
 
 	return AnkiRequest(InWorldContextObject, Body);
 }
+
+UAnkiRequestNode* UAnkiRequestNode::AddNote(UObject* InWorldContextObject, const FBlueprintJsonObject& InNote)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("addNote"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("note"), UBlueprintJsonLibrary::JsonMakeObject(InNote));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::AddNotes(UObject* InWorldContextObject, const TArray<FBlueprintJsonObject>& InNotes)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("addNotes"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	TArray<FBlueprintJsonValue> NotesValues;
+	UAnkiLibrary::Conv_JsonObjectArrayToJsonArray(InNotes, NotesValues);
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("notes"), UBlueprintJsonLibrary::JsonMakeArray(NotesValues));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::CanAddNotes(UObject* InWorldContextObject, const TArray<FBlueprintJsonObject>& InNotes)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("canAddNotes"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	TArray<FBlueprintJsonValue> NotesValues;
+	UAnkiLibrary::Conv_JsonObjectArrayToJsonArray(InNotes, NotesValues);
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("notes"), UBlueprintJsonLibrary::JsonMakeArray(NotesValues));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::UpdateNoteFields(UObject* InWorldContextObject, const FBlueprintJsonObject& InNote)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("updateNoteFields"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("note"), UBlueprintJsonLibrary::JsonMakeObject(InNote));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::AddTags(UObject* InWorldContextObject, const TArray<int64>& InNotes, const FString& InTags)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("addTags"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	TArray<FBlueprintJsonValue> NotesValues;
+	UAnkiLibrary::Conv_Int64ArrayToJsonArray(InNotes, NotesValues);
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("notes"), UBlueprintJsonLibrary::JsonMakeArray(NotesValues));
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("tags"), UBlueprintJsonLibrary::JsonMakeString(InTags));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::RemoveTags(UObject* InWorldContextObject, const TArray<int64>& InNotes, const FString& InTags)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("removeTags"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	TArray<FBlueprintJsonValue> NotesValues;
+	UAnkiLibrary::Conv_Int64ArrayToJsonArray(InNotes, NotesValues);
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("notes"), UBlueprintJsonLibrary::JsonMakeArray(NotesValues));
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("tags"), UBlueprintJsonLibrary::JsonMakeString(InTags));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::GetTags(UObject* InWorldContextObject)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("getTags"));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::ClearUnusedTags(UObject* InWorldContextObject)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("clearUnusedTags"));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::ReplaceTags(UObject* InWorldContextObject, const TArray<int64>& InNotes, const FString& InTagToReplace, const FString& InReplaceWithTag)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("replaceTags"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	TArray<FBlueprintJsonValue> NotesValues;
+	UAnkiLibrary::Conv_Int64ArrayToJsonArray(InNotes, NotesValues);
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("notes"), UBlueprintJsonLibrary::JsonMakeArray(NotesValues));
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("tag_to_replace"), UBlueprintJsonLibrary::JsonMakeString(InTagToReplace));
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("replace_with_tag"), UBlueprintJsonLibrary::JsonMakeString(InReplaceWithTag));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::ReplaceTagsInAllNotes(UObject* InWorldContextObject, const FString& InTagToReplace, const FString& InReplaceWithTag)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("replaceTagsInAllNotes"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("tag_to_replace"), UBlueprintJsonLibrary::JsonMakeString(InTagToReplace));
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("replace_with_tag"), UBlueprintJsonLibrary::JsonMakeString(InReplaceWithTag));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::FindNotes(UObject* InWorldContextObject, const FString& InQuery)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("findNotes"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("query"), UBlueprintJsonLibrary::JsonMakeString(InQuery));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::NotesInfo(UObject* InWorldContextObject, const TArray<int64>& InNotes)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("notesInfo"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	TArray<FBlueprintJsonValue> NotesValues;
+	UAnkiLibrary::Conv_Int64ArrayToJsonArray(InNotes, NotesValues);
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("notes"), UBlueprintJsonLibrary::JsonMakeArray(NotesValues));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::DeleteNotes(UObject* InWorldContextObject, const TArray<int64>& InNotes)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("deleteNotes"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	TArray<FBlueprintJsonValue> NotesValues;
+	UAnkiLibrary::Conv_Int64ArrayToJsonArray(InNotes, NotesValues);
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("notes"), UBlueprintJsonLibrary::JsonMakeArray(NotesValues));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::RemoveEmptyNotes(UObject* InWorldContextObject)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("removeEmptyNotes"));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
