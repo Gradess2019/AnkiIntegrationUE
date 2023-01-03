@@ -12,6 +12,13 @@ UAnkiRequestNode* UAnkiRequestNode::AnkiRequest(UObject* WorldContextObject, con
 	return RequestNode;
 }
 
+void UAnkiRequestNode::Activate()
+{
+	Super::Activate();
+
+	UAnkiLibrary::SendRequest(Body, [&](const FBlueprintJsonObject& InResponse) { OnResponse.Broadcast(InResponse); });
+}
+
 UAnkiRequestNode* UAnkiRequestNode::GetEaseFactors(UObject* InWorldContextObject, const TArray<int64>& InCards)
 {
 	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("getEaseFactors"));
@@ -326,9 +333,65 @@ UAnkiRequestNode* UAnkiRequestNode::GetDeckStats(UObject* WorldContextObject, co
 	return AnkiRequest(WorldContextObject, Body);
 }
 
-void UAnkiRequestNode::Activate()
+UAnkiRequestNode* UAnkiRequestNode::StoreMediaFile(UObject* InWorldContextObject, const FString& InFilename, const FString& InData)
 {
-	Super::Activate();
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("storeMediaFile"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("filename"), UBlueprintJsonLibrary::JsonMakeString(InFilename));
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("data"), UBlueprintJsonLibrary::JsonMakeString(InData));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
 
-	UAnkiLibrary::SendRequest(Body, [&](const FBlueprintJsonObject& InResponse) { OnResponse.Broadcast(InResponse); });
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::StoreMediaFileByPath(UObject* InWorldContextObject, const FString& InFilename, const FString& InPath)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("storeMediaFile"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("filename"), UBlueprintJsonLibrary::JsonMakeString(InFilename));
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("path"), UBlueprintJsonLibrary::JsonMakeString(InPath));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::StoreMediaFileByUrl(UObject* InWorldContextObject, const FString& InFilename, const FString& InPath)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("storeMediaFile"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("filename"), UBlueprintJsonLibrary::JsonMakeString(InFilename));
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("url"), UBlueprintJsonLibrary::JsonMakeString(InPath));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::RetrieveMediaFile(UObject* InWorldContextObject, const FString& InFilename)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("retrieveMediaFile"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("filename"), UBlueprintJsonLibrary::JsonMakeString(InFilename));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::GetMediaFilesNames(UObject* InWorldContextObject, const FString& InPattern)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("getMediaFilesNames"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("pattern"), UBlueprintJsonLibrary::JsonMakeString(InPattern));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::DeleteMediaFile(UObject* InWorldContextObject, const FString& InFilename)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("deleteMediaFile"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("filename"), UBlueprintJsonLibrary::JsonMakeString(InFilename));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
 }
