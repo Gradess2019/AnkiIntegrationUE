@@ -7,16 +7,13 @@
 #include "UObject/Object.h"
 #include "AnkiLibrary.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class ANKIINTEGRATION_API UAnkiLibrary : public UObject
 {
 	GENERATED_BODY()
 
 public:
-	FBlueprintJsonObject SendRequest(const FString& InAction, const int32 InVersion);
+	static bool SendRequest(const FBlueprintJsonObject& InBody, const TFunction<void(const FBlueprintJsonObject& InResponse)>& InCallback);
 	
 	// Card Actions
 	// void GetEaseFactors();
