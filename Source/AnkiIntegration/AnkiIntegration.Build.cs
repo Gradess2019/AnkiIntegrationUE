@@ -27,7 +27,8 @@ public class AnkiIntegration : ModuleRules
 			{
 				"Core",
 				"BlueprintJson",
-				"HTTP"
+				"HTTP",
+				"Json"
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);

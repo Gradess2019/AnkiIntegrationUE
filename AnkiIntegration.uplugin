@@ -3,7 +3,7 @@
 	"Version": 1,
 	"VersionName": "1.0",
 	"FriendlyName": "AnkiIntegration",
-	"Description": "Simple Anki integration",
+	"Description": "Simple Anki integration. Requires AnkiConnect to be installed.",
 	"Category": "Other",
 	"CreatedBy": "Gradess",
 	"CreatedByURL": "https://stepantrofimov.com",
