@@ -128,6 +128,38 @@ public:
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
 	static UAnkiRequestNode* DeleteMediaFile(UObject* InWorldContextObject, const FString& InFilename);
 
+	// Miscellaneous actions
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* RequestPermission(UObject* InWorldContextObject);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* Version(UObject* InWorldContextObject);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* ApiReflect(UObject* InWorldContextObject, const TArray<FString>& InScopes, const TArray<FString>& InActions);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* Sync(UObject* InWorldContextObject);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* GetProfiles(UObject* InWorldContextObject);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* LoadProfile(UObject* InWorldContextObject, const FString& InName);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* Multi(UObject* InWorldContextObject, const TArray<FBlueprintJsonObject>& InActions);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* ExportPackage(UObject* InWorldContextObject, const FString& InDeck, const FString& InPath, const bool InIncludeSched = false);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* ImportPackage(UObject* InWorldContextObject, const FString& InPath);
+	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "InWorldContextObject"), Category = "AnkiRequest")
+	static UAnkiRequestNode* ReloadCollection(UObject* InWorldContextObject);
+	
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "AnkiRequest")
 	FBlueprintJsonObject Body;

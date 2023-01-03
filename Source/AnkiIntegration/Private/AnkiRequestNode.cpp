@@ -129,7 +129,7 @@ UAnkiRequestNode* UAnkiRequestNode::GetIntervals(UObject* InWorldContextObject, 
 	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("cards"), UBlueprintJsonLibrary::JsonMakeArray(CardValues));
 	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("complete"), UBlueprintJsonLibrary::JsonMakeBool(InComplete));
 	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
-	
+
 	return AnkiRequest(InWorldContextObject, Body);
 }
 
@@ -206,7 +206,7 @@ UAnkiRequestNode* UAnkiRequestNode::RelearnCards(UObject* InWorldContextObject, 
 UAnkiRequestNode* UAnkiRequestNode::DeckNames(UObject* WorldContextObject)
 {
 	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("deckNames"));
-	
+
 	return AnkiRequest(WorldContextObject, Body);
 }
 
@@ -233,7 +233,7 @@ UAnkiRequestNode* UAnkiRequestNode::GetDecks(UObject* WorldContextObject, const 
 UAnkiRequestNode* UAnkiRequestNode::CreateDeck(UObject* WorldContextObject, const FString& DeckName)
 {
 	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("createDeck"));
-	
+
 	const FBlueprintJsonObject Params = UBlueprintJsonLibrary::JsonMake();
 	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("deck"), UBlueprintJsonLibrary::JsonMakeString(DeckName));
 	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
@@ -250,7 +250,7 @@ UAnkiRequestNode* UAnkiRequestNode::ChangeDeck(UObject* WorldContextObject, cons
 	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("cards"), UBlueprintJsonLibrary::JsonMakeArray(CardValues));
 	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("deck"), UBlueprintJsonLibrary::JsonMakeString(InDeck));
 	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
-	
+
 	return AnkiRequest(WorldContextObject, Body);
 }
 
@@ -273,7 +273,7 @@ UAnkiRequestNode* UAnkiRequestNode::GetDeckConfig(UObject* WorldContextObject, c
 	const auto Params = UBlueprintJsonLibrary::JsonMake();
 	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("deck"), UBlueprintJsonLibrary::JsonMakeString(Deck));
 	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
-	
+
 	return AnkiRequest(WorldContextObject, Body);
 }
 
@@ -392,6 +392,100 @@ UAnkiRequestNode* UAnkiRequestNode::DeleteMediaFile(UObject* InWorldContextObjec
 	const auto Params = UBlueprintJsonLibrary::JsonMake();
 	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("filename"), UBlueprintJsonLibrary::JsonMakeString(InFilename));
 	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::RequestPermission(UObject* InWorldContextObject)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("requestPermission"));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::Version(UObject* InWorldContextObject)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("version"));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::ApiReflect(UObject* InWorldContextObject, const TArray<FString>& InScopes, const TArray<FString>& InActions)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("apiReflect"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	TArray<FBlueprintJsonValue> ScopeValues;
+	TArray<FBlueprintJsonValue> ActionValues;
+	UAnkiLibrary::Conv_StringArrayToJsonArray(InScopes, ScopeValues);
+	UAnkiLibrary::Conv_StringArrayToJsonArray(InActions, ActionValues);
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("scopes"), UBlueprintJsonLibrary::JsonMakeArray(ScopeValues));
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("actions"), UBlueprintJsonLibrary::JsonMakeArray(ActionValues));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::Sync(UObject* InWorldContextObject)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("sync"));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::GetProfiles(UObject* InWorldContextObject)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("getProfiles"));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::LoadProfile(UObject* InWorldContextObject, const FString& InName)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("loadProfile"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("name"), UBlueprintJsonLibrary::JsonMakeString(InName));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::Multi(UObject* InWorldContextObject, const TArray<FBlueprintJsonObject>& InActions)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("multi"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	TArray<FBlueprintJsonValue> ActionValues;
+	UAnkiLibrary::Conv_JsonObjectArrayToJsonArray(InActions, ActionValues);
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("actions"), UBlueprintJsonLibrary::JsonMakeArray(ActionValues));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::ExportPackage(UObject* InWorldContextObject, const FString& InDeck, const FString& InPath, const bool InIncludeSched)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("exportPackage"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("deck"), UBlueprintJsonLibrary::JsonMakeString(InDeck));
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("path"), UBlueprintJsonLibrary::JsonMakeString(InPath));
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("includeSched"), UBlueprintJsonLibrary::JsonMakeBool(InIncludeSched));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::ImportPackage(UObject* InWorldContextObject, const FString& InPath)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("importPackage"));
+	const auto Params = UBlueprintJsonLibrary::JsonMake();
+	UBlueprintJsonLibrary::JsonMakeField(Params, TEXT("path"), UBlueprintJsonLibrary::JsonMakeString(InPath));
+	UBlueprintJsonLibrary::JsonMakeField(Body, TEXT("params"), UBlueprintJsonLibrary::JsonMakeObject(Params));
+
+	return AnkiRequest(InWorldContextObject, Body);
+}
+
+UAnkiRequestNode* UAnkiRequestNode::ReloadCollection(UObject* InWorldContextObject)
+{
+	const auto Body = UAnkiLibrary::MakeDefaultBodyObject(TEXT("reloadCollection"));
 
 	return AnkiRequest(InWorldContextObject, Body);
 }
